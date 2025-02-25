@@ -90,3 +90,8 @@ motion/*.wav
 motion/audio
 
 __pycache__/
+
+data/BinauralCuratedDataset/
+BinauralCuratedDataset.tar 
+.venv
+*.whl

@@ -85,6 +85,7 @@ def save_graph(train_metrics, test_metrics, save_dir):
 
 def import_attr(import_path):
     module, attr = import_path.rsplit('.', 1)
+    print("We making it to this part of the code???")
     return getattr(importlib.import_module(module), attr)
 
 def set_logger(log_path):

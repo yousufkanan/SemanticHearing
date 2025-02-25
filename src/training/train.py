@@ -22,8 +22,12 @@ from torchmetrics.functional import(
     signal_distortion_ratio as sdr,
     scale_invariant_signal_distortion_ratio as si_sdr)
 
+#from torchmetrics.audio import scale_invariant_signal_nois_ratio as si_snr
+
 from src.helpers import utils
 from src.training.eval import test_epoch
+
+
 
 def train_epoch(model: nn.Module, device: torch.device,
                 optimizer: optim.Optimizer,
@@ -41,20 +45,7 @@ def train_epoch(model: nn.Module, device: torch.device,
     losses = []
     metrics = {}
 
-    tensorboard_trace_handler = torch.profiler.tensorboard_trace_handler(
-        writer.log_dir)
     with tqdm(total=len(train_loader), desc='Train', ncols=100) as t:
-    #     with torch.profiler.profile(
-    #         schedule=torch.profiler.schedule(
-    #             skip_first=10,
-    #             wait=2,
-    #             warmup=2,
-    #             active=6,
-    #             repeat=2),
-    #         on_trace_ready=tensorboard_trace_handler,
-    #         profile_memory=True,
-    #         with_stack=True
-    #     ) as profiler:
             for batch_idx, (inp, tgt) in enumerate(train_loader):
                 # Move data to device
                 inp, tgt = train_loader.dataset.to(inp, tgt, device)
@@ -306,6 +297,7 @@ if __name__ == '__main__':
         vars(args)[k] = v
 
     # Initialize tensorboard writer
+    print("Has it Reached here")
     tensorboard_dir = os.path.join(args.exp_dir, 'tensorboard')
     args.writer = SummaryWriter(tensorboard_dir, purge_step=args.start_epoch)
     if args.wandb:
